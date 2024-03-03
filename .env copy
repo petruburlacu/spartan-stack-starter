@@ -1,0 +1,2 @@
+# Create your .env file base on this config
+DATABASE_URL=''
