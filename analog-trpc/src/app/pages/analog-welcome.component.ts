@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { shareReplay, Subject, switchMap, take } from 'rxjs';
+import { Observable, shareReplay, Subject, switchMap, take } from 'rxjs';
 import { waitFor } from '@analogjs/trpc';
 import { injectTrpcClient } from '../../trpc-client';
-import { Note } from '../../note';
+import { Note } from 'analog-trpc/src/db';
 
 @Component({
   selector: 'analog-trpc-analog-welcome',
@@ -17,12 +17,10 @@ import { Note } from '../../note';
   template: `
     <main class="flex-1 mx-auto">
       <section class="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
-        <div class="flex max-w-[64rem] flex-col items-center gap-4 text-center">
-          <img
-            class="h-12 w-12"
-            src="https://analogjs.org/img/logos/analog-logo.svg"
-            alt="AnalogJs logo. Two red triangles and a white analog wave in front"
-          />
+        <div
+          class="flex max-w-[64rem] flex-col items-center gap-4 text-center"
+        >
+          <img class="h-12 w-12" src="https://analogjs.org/img/logos/analog-logo.svg" alt="AnalogJs logo. Two red triangles and a white analog wave in front"/>
           <a
             class="rounded-2xl bg-zinc-200 px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             target="_blank"
@@ -63,7 +61,9 @@ import { Note } from '../../note';
           <h2 class="text-[#DD0031] font-medium text-3xl leading-[1.1]">
             Leave a note
           </h2>
-          <p class="max-w-[85%] leading-normal sm:text-lg sm:leading-7">
+          <p
+            class="max-w-[85%] leading-normal sm:text-lg sm:leading-7"
+          >
             This is an example of how you can use tRPC to superpower your
             client-server interaction.
           </p>
@@ -90,7 +90,7 @@ import { Note } from '../../note';
         <div class="mt-4" *ngIf="notes$ | async as notes; else loading">
           <div
             class="note mb-4 p-4 font-normal border border-input rounded-md"
-            *ngFor="let note of notes; trackBy: noteTrackBy; let i = index"
+            *ngFor="let note of notes; let i = index; trackBy: noteTrackBy;"
           >
             <div class="flex items-center justify-between">
               <p class="text-sm text-zinc-400">{{ note.createdAt | date }}</p>
@@ -125,7 +125,7 @@ import { Note } from '../../note';
 export class AnalogWelcomeComponent {
   private _trpc = injectTrpcClient();
   public triggerRefresh$ = new Subject<void>();
-  public notes$ = this.triggerRefresh$.pipe(
+  public notes$: Observable<Note[]> = this.triggerRefresh$.pipe(
     switchMap(() => this._trpc.note.list.query()),
     shareReplay(1)
   );

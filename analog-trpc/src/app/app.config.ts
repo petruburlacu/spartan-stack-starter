@@ -5,6 +5,7 @@ import { provideFileRouter } from '@analogjs/router';
 
 import { provideTrpcClient } from '../trpc-client';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideFileRouter(),
@@ -12,5 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
 
     provideTrpcClient(),
+
   ],
 };

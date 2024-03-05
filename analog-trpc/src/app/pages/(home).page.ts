@@ -6,6 +6,9 @@ import { AnalogWelcomeComponent } from './analog-welcome.component';
   selector: 'analog-trpc-home',
   standalone: true,
   imports: [AnalogWelcomeComponent],
-  template: ` <analog-trpc-analog-welcome /> `,
+  template: `
+     <analog-trpc-analog-welcome/>
+  `,
 })
-export default class HomeComponent {}
+export default class HomeComponent {
+}

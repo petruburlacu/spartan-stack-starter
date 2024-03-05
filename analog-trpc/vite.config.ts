@@ -11,24 +11,25 @@ export default defineConfig(({ mode }) => {
     publicDir: 'src/public',
 
     ssr: {
-      noExternal: ['@analogjs/trpc', '@trpc/server'],
+      noExternal: ['@analogjs/trpc','@trpc/server'],
     },
 
     build: {
-      outDir: '../../dist/apps/analog-trpc/client',
+      outDir: '../dist/analog-trpc/client',
       reportCompressedSize: true,
       commonjsOptions: { transformMixedEsModules: true },
       target: ['es2020'],
     },
     plugins: [
+
       analog({
         nitro: {
           routeRules: {
             '/': {
               prerender: false,
-            },
-          },
-        },
+            }
+          }
+        }
       }),
 
       nxViteTsPaths(),
@@ -41,7 +42,7 @@ export default defineConfig(({ mode }) => {
       include: ['**/*.spec.ts'],
       reporters: ['default'],
       cache: {
-        dir: `../../node_modules/.vitest`,
+        dir: `../node_modules/.vitest`,
       },
     },
     define: {

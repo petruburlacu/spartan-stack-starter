@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  display: block;
-  height: 100%;
+html, body {
+display: block;
+height: 100%;
 }
